@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base1::Layout(~{::section})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+</head>
+<body>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="my-card mt-1">
+
+                    <div th:if="${session.message}"
+                         th:class="'alert alert-' + ${session.message.type}"
+                         role="alert">
+                        <p th:text="${session.message.content}"></p>
+
+                    </div>
+
+                    <!-- Image -->
+                    <div class="text-center mb-3">
+                        <img style="width:80px;" th:src="@{/image/customer.png}" alt="Customer"/>
+                    </div>
+
+                    <h1 class="text-center">Register Here</h1>
+
+                    <!-- Form starts here -->
+                    <form th:action="@{/do_register}" method="post" th:object="${user}">
+
+                        <!-- Name field -->
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input
+                                    name="name"
+                                    type="text"
+                                    class="form-control"
+                                    th:classappend="${#fields.hasErrors('name')} ? ' is-invalid' : ''"
+                                    placeholder="Enter here"
+                                    required
+                                    th:value="${user.name}"
+                                    id="name" />
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:each="err : ${#fields.errors('name')}">
+                                <p th:text="${err}"></p>
+                            </div>
+                        </div>
+
+                        <!-- Email field -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input
+                                    name="email"
+                                    type="email"
+                                    class="form-control"
+                                    placeholder="Enter Email"
+                                    required
+                                    th:value="${user.email}"
+                                    id="email"/>
+                        </div>
+
+                        <!-- Password field -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input
+                                    name="password"
+                                    type="password"
+                                    class="form-control"
+                                    placeholder="Enter Your Password"
+                                    required
+                                    th:value="${user.password}"
+                                    id="password"/>
+                        </div>
+
+                        <!-- About field -->
+                        <div class="form-group">
+                            <textarea
+                                    name="about"
+                                    th:text="${user.about}"
+                                    placeholder="Enter something about yourself"
+                                    rows="10"
+                                    class="form-control"></textarea>
+                        </div>
+
+                        <!-- Checkbox -->
+                        <div class="form-group form-check text-center mt-3">
+                            <input
+                                    type="checkbox"
+                                    name="agreement"
+                                    class="form-check-input"
+                                    id="agreement"
+                                    required/>
+                            <label for="agreement">Accept terms and conditions</label>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn bg-primary  text-white">
+                                Submit
+                            </button>
+                            <button type="reset" class="btn btn-warning ">
+                                Reset
+                            </button>
+                        </div>
+
+                    </form>
+                    <!-- Form ends here -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
